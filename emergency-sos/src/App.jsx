@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useAuth } from './hooks/useAuth';
+import Login from './components/shared/login';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { user, userRole, loading, logout } = useAuth();
+
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <Login />;
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Container maxWidth="sm">
+      <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Card elevation={4} sx={{ width: '100%', borderRadius: 3 }}>
+          <CardContent>
+            <Typography variant="h5" fontWeight={700} gutterBottom>
+              Welcome, {user.displayName}
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 2 }}>
+              Assigned role: <b style={{ textTransform: 'capitalize' }}>{userRole || 'not assigned'}</b>
+            </Typography>
+            <Button variant="contained" color="error" onClick={logout}>
+              Logout
+            </Button>
+          </CardContent>
+        </Card>
+      </Box>
+    </Container>
+  );
 }
 
-export default App
+export default App;
