@@ -51,4 +51,7 @@ export function getCurrentPosition(options = {}) {
   });
 }
 
+// Haversine distance in meters
+// distanceMeters removed per feature rollback
+
 

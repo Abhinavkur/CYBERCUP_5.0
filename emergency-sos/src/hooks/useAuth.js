@@ -31,15 +31,14 @@ export const useAuth = () => {
       const userRef = doc(db, 'users', result.user.uid);
       const userSnap = await getDoc(userRef);
 
-  // ✅ Only create if not already in Firestore
-      if (!userSnap.exists()) {
-        await setDoc(userRef, {
-          email: result.user.email,
-          name: result.user.displayName,
-          role,
-          createdAt: new Date().toISOString()
-        });
-      }
+      // Upsert role on sign-in to ensure the selected role is stored
+      await setDoc(userRef, {
+        email: result.user.email,
+        name: result.user.displayName,
+        role,
+        // Only set createdAt if missing; merge keeps existing fields intact
+        createdAt: userSnap.exists() ? userSnap.data().createdAt || new Date().toISOString() : new Date().toISOString()
+      }, { merge: true });
 
       setUser(result.user);
       setUserRole(role);

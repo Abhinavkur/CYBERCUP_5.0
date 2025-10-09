@@ -1,6 +1,7 @@
 import { useAuth } from './hooks/useAuth';
 import Login from './components/shared/login';
 import SOSbutton from './components/citizen/SOSbutton';
+import CitizenDashboard from './components/citizen/CitizenDashboard';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -8,6 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
+import ResponderDashboard from './components/responder/ResponderDashboard';
 
 function App() {
   const { user, userRole, loading, logout } = useAuth();
@@ -28,8 +30,14 @@ function App() {
             </Typography>
 
             {userRole === 'citizen' && (
-              <Box sx={{ my: 3, display: 'flex', justifyContent: 'center' }}>
-                <SOSbutton />
+              <Box sx={{ my: 1 }}>
+                <CitizenDashboard />
+              </Box>
+            )}
+
+            {(userRole === 'volunteer' || userRole === 'ngo' || userRole === 'police') && (
+              <Box sx={{ my: 1 }}>
+                <ResponderDashboard />
               </Box>
             )}
 
