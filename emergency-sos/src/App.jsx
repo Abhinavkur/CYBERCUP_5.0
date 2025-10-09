@@ -1,5 +1,6 @@
 import { useAuth } from './hooks/useAuth';
 import Login from './components/shared/login';
+import SOSbutton from './components/citizen/SOSbutton';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -25,6 +26,13 @@ function App() {
             <Typography variant="body1" sx={{ mb: 2 }}>
               Assigned role: <b style={{ textTransform: 'capitalize' }}>{userRole || 'not assigned'}</b>
             </Typography>
+
+            {userRole === 'citizen' && (
+              <Box sx={{ my: 3, display: 'flex', justifyContent: 'center' }}>
+                <SOSbutton />
+              </Box>
+            )}
+
             <Button variant="contained" color="error" onClick={logout}>
               Logout
             </Button>
