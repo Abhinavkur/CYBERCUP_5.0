@@ -165,11 +165,16 @@ export function useSendAlertMessage(alertId) {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(null);
 
-  const send = useCallback(async (text) => {
+  const send = useCallback(async (text, isVoiceMessage = false) => {
     setSending(true);
     setError(null);
     try {
-      await sendAlertMessage({ alertId, sender: { uid: user?.uid, displayName: user?.displayName, email: user?.email, role: userRole }, text });
+      await sendAlertMessage({ 
+        alertId, 
+        sender: { uid: user?.uid, displayName: user?.displayName, email: user?.email, role: userRole }, 
+        text,
+        isVoiceMessage
+      });
     } catch (e) {
       setError(e);
       throw e;

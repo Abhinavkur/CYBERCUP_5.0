@@ -11,6 +11,8 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { useAlertsStream, useClaimAlert, useResolveAlert, useMyClaimsStream } from '../../hooks/useAlert';
 import AlertMap from './AlertMap';
 import ChatPanel from '../shared/ChatPanel';
+import VoiceMessageIndicator from './VoiceMessageIndicator';
+import VoiceDemoResponder from './VoiceDemoResponder';
 
 function formatTimestamp(ts) {
   try {
@@ -95,9 +97,12 @@ export default function ResponderDashboard() {
                       <Typography variant="body2" color="text.secondary">
                         {a.location?.lat?.toFixed?.(4)}, {a.location?.lng?.toFixed?.(4)} {a.location?.lowAccuracy ? '(low accuracy)' : ''}
                       </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        Claimed {formatTimestamp(a.claimedAt)}
-                      </Typography>
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <Typography variant="caption" color="text.secondary">
+                          Claimed {formatTimestamp(a.claimedAt)}
+                        </Typography>
+                        <VoiceMessageIndicator alertId={a.id} />
+                      </Stack>
                     </Stack>
 
                     <Stack direction="row" spacing={1}>
@@ -144,9 +149,12 @@ export default function ResponderDashboard() {
                       <Typography variant="body2" color="text.secondary">
                         {a.location?.lat?.toFixed?.(4)}, {a.location?.lng?.toFixed?.(4)} {a.location?.lowAccuracy ? '(low accuracy)' : ''}
                       </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {formatTimestamp(a.createdAt)}
-                      </Typography>
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <Typography variant="caption" color="text.secondary">
+                          {formatTimestamp(a.createdAt)}
+                        </Typography>
+                        <VoiceMessageIndicator alertId={a.id} />
+                      </Stack>
                     </Stack>
 
                     <Stack direction="row" spacing={1}>
@@ -166,6 +174,9 @@ export default function ResponderDashboard() {
           </Stack>
         </CardContent>
       </Card>
+      
+      <VoiceDemoResponder />
+      
       <ChatPanel alert={chatAlert} open={!!chatAlert} onClose={() => setChatAlert(null)} />
     </Stack>
   );

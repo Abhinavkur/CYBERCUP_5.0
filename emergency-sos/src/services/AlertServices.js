@@ -173,12 +173,13 @@ export function streamAlertMessages(alertId, callback, { max = 200 } = {}, onErr
   );
 }
 
-export async function sendAlertMessage({ alertId, sender, text }) {
+export async function sendAlertMessage({ alertId, sender, text, isVoiceMessage = false }) {
   if (!alertId) throw new Error('alertId required');
   if (!sender || !sender.uid) throw new Error('sender required');
   if (!text || !text.trim()) throw new Error('text required');
   const payload = {
     text: text.trim(),
+    isVoiceMessage,
     createdAt: Timestamp.now(),
     sender: {
       uid: sender.uid,

@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import SOSbutton from './SOSbutton';
 import { useMyAlertsStream } from '../../hooks/useAlert';
 import ChatPanel from '../shared/ChatPanel';
+import VoiceDemo from '../shared/VoiceDemo';
 
 export default function CitizenDashboard() {
   const { alerts, loading } = useMyAlertsStream({ max: 25 });
@@ -22,6 +23,7 @@ export default function CitizenDashboard() {
         <SOSbutton />
       </Box>
 
+      <VoiceDemo />
 
       <Card elevation={3}>
         <CardContent>
