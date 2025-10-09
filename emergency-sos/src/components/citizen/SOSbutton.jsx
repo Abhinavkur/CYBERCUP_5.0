@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import { getCurrentPosition } from '../../services/locationService';
 import { useCreateAlert } from '../../hooks/useAlert';
 
@@ -20,7 +21,8 @@ export default function SOSbutton() {
 
       setStatus('sending');
       setMessage('Sending SOS alert...');
-      await create({ coords, type: 'general' });
+      // Use a default emergency type when sending the alert
+      await create({ coords, type: 'other' });
 
       setStatus('success');
       setMessage('SOS sent. Help is on the way.');
@@ -49,9 +51,11 @@ export default function SOSbutton() {
       >
         {isBusy ? <CircularProgress size={28} color="inherit" /> : 'SEND SOS'}
       </Button>
+      
       <Typography variant="body2" color="text.secondary">
         Press to share your location and notify nearby responders
       </Typography>
+      
     </Stack>
   );
 }
